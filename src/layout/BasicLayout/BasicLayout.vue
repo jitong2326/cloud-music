@@ -1,11 +1,13 @@
 <template>
-  <div>header</div>
-  <keep-alive>
-    <router-view></router-view>
-  </keep-alive>
+  <!-- <div>header</div> -->
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
   <TabBar />
 </template>
 
 <script lang="ts" setup>
-import TabBar from '@/components/TabBar/TabBar.vue';
+import TabBar from '@/components/TabBar/index.vue'
 </script>

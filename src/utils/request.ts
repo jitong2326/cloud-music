@@ -1,12 +1,13 @@
 import axios from 'axios'
-import { CT } from '@/config/config'
+import { CT, URL } from '@/config/config'
 import { Toast } from 'vant'
 
 // axios.defaults.headers.common['Content-Type'] = 'application/json'
 // axios.defaults.headers.common['area-code'] = 'CWHT'
 // 创建 axios 实例
 const request = axios.create({
-  timeout: CT.timeout // 请求超时时间
+  baseURL: URL.musicUrl,
+  timeout: CT.timeout, // 请求超时时间
 })
 
 // 异常拦截处理器
@@ -32,4 +33,3 @@ request.interceptors.response.use((response) => {
 }, errorHandler)
 
 export default request
-

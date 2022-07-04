@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { getBanner } from '@/api/found/index'
+import { getBanner } from '@/api/modules/found'
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
 import 'swiper/css'
@@ -51,10 +51,10 @@ interface IBanner {
 let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
 let banners = ref<Array<IBanner>>([])
 
-onMounted(() => {
-  getBanner().then((res: any) => {
-    banners.value = res.data.banners
-  })
+onMounted(async () => {
+  // 获取轮播图
+  let res = await getBanner()
+  banners.value = res.data.banners
 })
 
 const setting = useSettingStore()

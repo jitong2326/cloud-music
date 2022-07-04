@@ -28,5 +28,13 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://netease-cloud-music-api-amber-eta.vercel.app',
+        changeOrigin: true,
+      }
+    }
   }
 })

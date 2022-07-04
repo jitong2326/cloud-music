@@ -20,8 +20,8 @@ export const useUserStore = defineStore('counter', {
       login(params).then((res) => {
         console.log(res)
         const ex = 7 * 24 * 60 * 60 * 1000
-        storage.set('ACCESS_TOKEN', res.token, ex)
-        this.setToken(res.token)
+        storage.set('ACCESS_TOKEN', res.data.token, ex)
+        this.setToken(res.data.token)
       })
     }
   }

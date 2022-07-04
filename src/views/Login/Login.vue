@@ -1,16 +1,24 @@
 <template>
-  <div class="login-form">
-    <van-form @submit="onSubmit">
-      <van-cell-group inset>
-        <van-field v-model="email" name="邮箱" placeholder="邮箱" />
-        <div class="login-captcha">
-          <van-field v-model="password" name="密码" placeholder="密码" />
+  <div class="container">
+    <div class="logo-box">
+      <svg-icon name="logo" color="#FFFFFF"></svg-icon>
+    </div>
+    <div class="place"></div>
+    <div class="login-form">
+      <van-form @submit="onSubmit">
+        <van-cell-group inset>
+          <van-field v-model="email" name="邮箱" placeholder="邮箱" />
+          <div class="login-captcha">
+            <van-field v-model="password" name="密码" placeholder="密码" />
+          </div>
+        </van-cell-group>
+        <div style="margin: 16px">
+          <van-button round block type="primary" color="#FFFFFF" native-type="submit">
+            <span style="color: #dd2d1e">登录</span>
+          </van-button>
         </div>
-      </van-cell-group>
-      <div style="margin: 16px">
-        <van-button round block type="primary" native-type="submit"> 登录 </van-button>
-      </div>
-    </van-form>
+      </van-form>
+    </div>
   </div>
 </template>
 
@@ -31,9 +39,30 @@ const onSubmit = () => {
 </script>
 
 <style lang="less" scoped>
-.login-form {
+.container {
   height: 100vh;
-  padding-top: 400px !important;
+  background-color: #dd2d1e;
+  overflow: hidden;
+  .logo-box {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #eb2d21;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 10vh auto 0;
+    .icon-logo {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
+.login-form {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 5vw;
+  margin-top: 10vh;
 }
 .login-captcha {
   display: flex;

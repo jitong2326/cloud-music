@@ -13,7 +13,7 @@ export default defineConfig({
     styleImport({
       resolves: [VantResolve()]
     }),
-    svgBuilder('./src/assets/icons/tabs/')
+    svgBuilder('./src/assets/icons/')
   ],
   css: {
     preprocessorOptions: {

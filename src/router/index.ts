@@ -3,22 +3,23 @@ import BasicLayout from '@/layout/BasicLayout/BasicLayout.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: 'found',
+    name: 'Home',
+    redirect: '/found',
     component: BasicLayout,
     children: [
       {
         path: 'found',
-        name: 'found',
+        name: 'Found',
         component: () => import('@/views/Found/Found.vue')
       },
       {
         path: 'music',
-        name: 'music',
+        name: 'Music',
         component: () => import('@/views/Music/Music.vue')
       },
       {
         path: 'focus',
-        name: 'focus',
+        name: 'Focus',
         component: () => import('@/views/Focus/Focus.vue')
       }
     ]

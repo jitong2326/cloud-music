@@ -11,7 +11,7 @@ interface IUserState {
   profile: any
   cookie: string
 }
-export const useUserStore = defineStore('counter', {
+export const useUserStore = defineStore('user', {
   state: (): IUserState => {
     return {
       token: '',

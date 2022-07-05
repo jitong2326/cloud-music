@@ -32,7 +32,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://netease-cloud-music-api-amber-eta.vercel.app',
+        target: 'https://netease-cloud-music-api2-iota.vercel.app',
         changeOrigin: true,
       }
     }

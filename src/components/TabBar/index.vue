@@ -43,7 +43,7 @@ let tabs = reactive<Array<ITabItem>>([
 ])
 
 const setting = useSettingStore()
-let themeColor = ref<string>(setting.variable.themeColor)
+let themeColor = ref<string>(setting.cssVar.themeColor)
 
 const router = useRouter()
 const handleClickTab = (tab: ITabItem): void => {

@@ -21,6 +21,7 @@
     <div class="nav">
       <div v-for="e in 8" :key="e" class="nav-item">
         <div
+          v-if="settingStore.cssVar"
           class="nav-icon"
           :style="{
             backgroundColor: settingStore.cssVar.themeColor + '44'
@@ -42,7 +43,7 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/effect-cube'
 import 'swiper/css/pagination'
-import { onMounted, ref, defineComponent } from 'vue'
+import { onMounted, ref, defineComponent, watch } from 'vue'
 import { useSettingStore } from '@/store/setting'
 
 interface IBanner {
@@ -54,6 +55,7 @@ interface IBanner {
 }
 
 export default defineComponent({
+  name: 'Found',
   components: {
     Swiper,
     SwiperSlide
@@ -63,6 +65,13 @@ export default defineComponent({
     let banners = ref<Array<IBanner>>([])
 
     let settingStore = useSettingStore()
+    watch(
+      () => settingStore,
+      (val) => {
+        console.log(val)
+      },
+      { immediate: true }
+    )
     onMounted(async () => {
       let res = await getBanner()
       banners.value = res.data.banners

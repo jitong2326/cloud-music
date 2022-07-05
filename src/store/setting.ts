@@ -8,7 +8,7 @@ interface ISettingState {
   activeTab: string,
   variable: ITheme
 }
-export const useSettingStore = defineStore('counter', {
+export const useSettingStore = defineStore('setting', {
   state: () : ISettingState => {
     return {
       activeTab: 'found',

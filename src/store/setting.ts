@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import variable from '@/style/variable.module.less'
 interface ITheme {
-  themeColor?: string
+  themeColor: string
 }
 interface ISettingState {
   activeTab: string,
@@ -16,7 +16,9 @@ export const useSettingStore = defineStore('counter', {
     }
   },
   getters: {
-    cssVar: (state) => state.variable
+    cssVar(state) {
+      return state.variable
+    }
   },
   actions: {
     switchActiveTab(newTab: string): void {

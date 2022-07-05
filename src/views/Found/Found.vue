@@ -20,8 +20,13 @@
     </div>
     <div class="nav">
       <div v-for="e in 8" :key="e" class="nav-item">
-        <div class="nav-icon">
-          <svg-icon name="playlists" :color="themeColor"></svg-icon>
+        <div
+          class="nav-icon"
+          :style="{
+            backgroundColor: settingStore.cssVar.themeColor + '44'
+          }"
+        >
+          <svg-icon name="playlists" :color="settingStore.cssVar.themeColor"></svg-icon>
         </div>
         <span class="nav-item-title">歌单</span>
       </div>
@@ -29,7 +34,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getBanner } from '@/api/modules/found'
 
@@ -37,7 +42,7 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/effect-cube'
 import 'swiper/css/pagination'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, defineComponent } from 'vue'
 import { useSettingStore } from '@/store/setting'
 
 interface IBanner {
@@ -48,18 +53,27 @@ interface IBanner {
   targetId: bigint
 }
 
-let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
-let banners = ref<Array<IBanner>>([])
+export default defineComponent({
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  setup() {
+    let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
+    let banners = ref<Array<IBanner>>([])
 
-onMounted(async () => {
-  // 获取轮播图
-  let res = await getBanner()
-  banners.value = res.data.banners
+    let settingStore = useSettingStore()
+    onMounted(async () => {
+      let res = await getBanner()
+      banners.value = res.data.banners
+    })
+    return {
+      modules,
+      banners,
+      settingStore
+    }
+  }
 })
-
-const setting = useSettingStore()
-let themeColor = setting.cssVar.themeColor
-let themeColorWithOpacity = themeColor + '44'
 </script>
 
 <style lang="less">
@@ -112,7 +126,6 @@ let themeColorWithOpacity = themeColor + '44'
         width: 90px;
         height: 90px;
         border-radius: 50%;
-        background-color: v-bind(themeColorWithOpacity);
         display: flex;
         flex-direction: column;
         justify-content: center;

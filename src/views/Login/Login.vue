@@ -25,16 +25,23 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useUserStore } from '@/store/user'
+import { useRouter } from 'vue-router';
 
 const email = ref('')
 const password = ref('')
 
 const userStore = useUserStore()
-const onSubmit = () => {
-  userStore.login({
+const router = useRouter()
+const onSubmit = async () => {
+  const res = await userStore.login({
     email: email.value,
     password: password.value
   })
+  if (res?.data.code === 200) {
+    router.push({
+      path: '/found'
+    })
+  }
 }
 </script>
 

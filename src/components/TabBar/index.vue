@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSettingStore } from '@/store/setting'
 interface ITabItem {
@@ -43,7 +43,7 @@ let tabs = reactive<Array<ITabItem>>([
 ])
 
 const setting = useSettingStore()
-let themeColor = setting.cssVar.themeColor
+let themeColor = ref<string>(setting.variable.themeColor)
 
 const router = useRouter()
 const handleClickTab = (tab: ITabItem): void => {

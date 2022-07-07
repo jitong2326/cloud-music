@@ -1,15 +1,21 @@
 <template>
   <div class="tabs-wrapper">
     <div v-for="tab in tabs" :key="tab.name" class="tabs-item" @click="handleClickTab(tab)">
-      <div :class="{ 'icon-wrapper': true, 'icon-wrapper-active': tab.icon === setting.activeTab }">
+      <div
+        :class="{ 'icon-wrapper': true }"
+        :style="{
+          backgroundColor: tab.icon === setting.activeTab ? setting.cssVar.themeColor : '#FFFFFF'
+        }"
+      >
         <svg-icon
           :name="tab.icon"
           :color="tab.icon === setting.activeTab ? '#FFFFFF' : '#515151'"
         />
       </div>
-      <span :style="{ color: tab.icon === setting.activeTab ? themeColor : '#515151' }">{{
-        tab.name
-      }}</span>
+      <span
+        :style="{ color: tab.icon === setting.activeTab ? setting.cssVar.themeColor : '#515151' }"
+        >{{ tab.name }}</span
+      >
     </div>
   </div>
 </template>
@@ -91,9 +97,6 @@ watch(
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      &-active {
-        background-color: v-bind(themeColor);
-      }
       .icon {
         &-found,
         &-music,

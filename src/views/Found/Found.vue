@@ -12,9 +12,12 @@
           disableOnInteraction: false
         }"
       >
-        <SwiperSlide v-for="(banner, index) in banners" :key="index">
+        <SwiperSlide v-for="(banner, index) in banners" :key="index" class="swiper-slide">
           <!-- {{ index }} -->
           <img :src="banner.imageUrl" alt="" />
+          <div class="banner-tag" :style="{ backgroundColor: banner.titleColor }">
+            {{ banner.typeTitle }}
+          </div>
         </SwiperSlide>
       </Swiper>
     </div>
@@ -24,7 +27,7 @@
           v-if="settingStore.cssVar"
           class="nav-icon"
           :style="{
-            backgroundColor: settingStore.cssVar.themeColor + '44'
+            backgroundColor: '#ecfafd'
           }"
         >
           <svg-icon name="playlists" :color="settingStore.cssVar.themeColor"></svg-icon>
@@ -32,18 +35,20 @@
         <span class="nav-item-title">歌单</span>
       </div>
     </div>
+    <Menu />
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getBanner } from '@/api/modules/found'
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
+import Menu from '@/components/Menu/index.vue'
 import 'swiper/css'
 import 'swiper/css/effect-cube'
 import 'swiper/css/pagination'
-import { onMounted, ref, defineComponent, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useSettingStore } from '@/store/setting'
 
 interface IBanner {
@@ -54,35 +59,18 @@ interface IBanner {
   targetId: bigint
 }
 
-export default defineComponent({
-  name: 'Found',
-  components: {
-    Swiper,
-    SwiperSlide
-  },
-  setup() {
-    let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
-    let banners = ref<Array<IBanner>>([])
+let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
+let banners = ref<Array<IBanner>>([])
 
-    let settingStore = useSettingStore()
-    watch(
-      () => settingStore,
-      (val) => {
-        console.log(val)
-      },
-      { immediate: true }
-    )
-    onMounted(async () => {
-      let res = await getBanner()
-      banners.value = res.data.banners
-    })
-    return {
-      modules,
-      banners,
-      settingStore
-    }
-  }
+let settingStore = useSettingStore()
+onMounted(async () => {
+  let res = await getBanner()
+  banners.value = res.data.banners
 })
+// const changeThemeCOlor = () => {
+//   settingStore.setThemeColor('#21cedf')
+//   console.log(settingStore.cssVar.themeColor)
+// }
 </script>
 
 <style lang="less">
@@ -103,12 +91,22 @@ export default defineComponent({
   .swiper {
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 22px;
     overflow: hidden;
     .swiper-slide {
+      position: relative;
       img {
         width: 100%;
         height: 100%;
+      }
+      .banner-tag {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #ffffff;
+        padding: 10px;
+        border-radius: 22px 0 22px 0;
+        font-size: 12px;
       }
     }
   }

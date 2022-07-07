@@ -1,18 +1,21 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
 import variable from '@/style/variable.module.less'
+import { storage } from '@/utils/Storage'
 interface ITheme {
   themeColor: string
 }
 interface ISettingState {
-  activeTab: string,
+  activeTab: string
   variable: ITheme
 }
 export const useSettingStore = defineStore('setting', {
-  state: () : ISettingState => {
+  state: (): ISettingState => {
     return {
       activeTab: 'found',
-      variable
+      variable: {
+        themeColor: storage.get('THEME_COLOR') || variable.themeColor
+      }
     }
   },
   getters: {
@@ -23,6 +26,10 @@ export const useSettingStore = defineStore('setting', {
   actions: {
     switchActiveTab(newTab: string): void {
       this.activeTab = newTab
+    },
+    setThemeColor(newThemeCOlor: string): void {
+      this.variable.themeColor = newThemeCOlor
+      storage.set('THEME_COLOR', newThemeCOlor)
     }
   }
 })

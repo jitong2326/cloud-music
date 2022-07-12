@@ -1,5 +1,6 @@
 <template>
   <div class="home-container">
+    <div class="home-header"></div>
     <div class="banner">
       <Swiper
         :modules="modules"
@@ -22,7 +23,7 @@
       </Swiper>
     </div>
     <div class="nav">
-      <div v-for="e in 8" :key="e" class="nav-item">
+      <div v-for="(e, i) in navList" :key="i" class="nav-item">
         <div
           v-if="settingStore.cssVar"
           class="nav-icon"
@@ -32,19 +33,18 @@
         >
           <svg-icon name="playlists" :color="settingStore.cssVar.themeColor"></svg-icon>
         </div>
-        <span class="nav-item-title">歌单</span>
+        <span class="nav-item-title">{{ e.name }}</span>
       </div>
     </div>
-    <Menu />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { getBanner } from '@/api/modules/found'
+import { getBanner, getNavList, getFound } from '@/api/modules/found'
+import { getUserInfo } from '@/api/modules/user'
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
-import Menu from '@/components/Menu/index.vue'
 import 'swiper/css'
 import 'swiper/css/effect-cube'
 import 'swiper/css/pagination'
@@ -58,15 +58,32 @@ interface IBanner {
   targetType: number
   targetId: bigint
 }
+interface INavItem {
+  homepageMode: string
+  iconUrl: string
+  id: number
+  name: string
+  skinSupport: boolean
+  url: string
+}
 
 let modules = [Navigation, Pagination, Scrollbar, A11y, Autoplay]
 let banners = ref<Array<IBanner>>([])
+
+let navList = ref<Array<INavItem>>([])
+const getNav = async () => {
+  const res = await getNavList()
+  navList.value = res.data.data
+}
 
 let settingStore = useSettingStore()
 onMounted(async () => {
   let res = await getBanner()
   banners.value = res.data.banners
+  await getNav()
+  console.log(await getFound())
 })
+
 // const changeThemeCOlor = () => {
 //   settingStore.setThemeColor('#21cedf')
 //   console.log(settingStore.cssVar.themeColor)
@@ -80,6 +97,10 @@ onMounted(async () => {
   box-sizing: border-box;
   padding: 20px;
   overflow-y: scroll;
+  .home-header {
+    height: 40px;
+    margin-bottom: 20px;
+  }
   h1 {
     color: @themeColor;
   }
@@ -130,14 +151,20 @@ onMounted(async () => {
       align-items: center;
       margin: 0 12px;
       .nav-icon {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         margin-bottom: 10px;
+      }
+      img {
+        width: 90px;
+        height: 90px;
+        color: #ff0000;
       }
       .icon-playlists {
         width: 60px;

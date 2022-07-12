@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router/index'
+import { setupRouter } from './router'
 import * as vant from 'vant'
 import 'vant/lib/index.css';
 import svgIcon from './components/SvgIcon/index.vue'
@@ -11,7 +11,7 @@ const app = createApp(App)
 const pinia = createPinia()
 app.component('SvgIcon', svgIcon)
 
-app.use(router)
+await setupRouter(app)
 app.use(pinia)
 app.use(vant)
 app.mount('#app')

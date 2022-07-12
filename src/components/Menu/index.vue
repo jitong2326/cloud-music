@@ -1,18 +1,20 @@
 <template>
   <div
-    v-if="showMenu"
+    v-show="showMenu"
     class="menu-container"
     @touchstart.stop="touchStart"
     @touchend.stop="touchEnd"
     @touchmove.stop="touchMove"
   >
-    <div class="menu-mask" :style="{ backgroundColor: maskOpacity }" @click.stop="close">
+    <div class="menu-mask" :style="{ backgroundColor: maskOpacity }" @click="close">
       <div
+        ref="menuRef"
         :class="['menu-side', { 'menu-side-transition': useTransition }]"
         :style="{
           width: `${menuWidth}vw`,
-          left: `${menuLeft}`
+          left: `${menuLeft}vw`
         }"
+        @click.stop="() => {}"
       >
         111111
       </div>
@@ -23,17 +25,25 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 const menuWidth = 85
-let menuLeft = ref<string>('0')
-let maskOpacity = ref<string>('rgba(0, 0, 0, 0.5)')
-let showMenu = ref<boolean>(true)
+let menuLeft = ref<number>(0 - menuWidth)
+let maskOpacity = ref<string>('rgba(0, 0, 0, 0)')
+let showMenu = ref<boolean>(false)
 let useTransition = ref<boolean>(true)
 
 const pxToVw = (px: number): number => {
   return px / (document.body.clientWidth / 100)
 }
 
+const open = () => {
+  showMenu.value = true
+  setTimeout(() => {
+    menuLeft.value = 0
+    maskOpacity.value = 'rgba(0, 0, 0, 0.5)'
+  }, 1)
+}
+
 const close = () => {
-  menuLeft.value = `-${menuWidth}vw`
+  menuLeft.value = 0 - menuWidth
   maskOpacity.value = 'rgba(0, 0, 0, 0)'
   setTimeout(() => {
     showMenu.value = false
@@ -51,17 +61,21 @@ const touchMove = (e: any) => {
   if (!startX) return
   useTransition.value = false
   offsetX = startX - e.touches[0].pageX
-  menuLeft.value = `-${pxToVw(offsetX)}vw`
+  menuLeft.value = 0 - pxToVw(offsetX)
 }
 const touchEnd = (e: any) => {
   useTransition.value = true
   if (pxToVw(offsetX) > menuWidth / 2) {
-    menuLeft.value = `-${menuWidth}vw`
+    menuLeft.value = 0 - menuWidth
     maskOpacity.value = 'rgba(0, 0, 0, 0)'
   } else {
-    menuLeft.value = '0'
+    menuLeft.value = 0
   }
 }
+
+defineExpose({
+  open
+})
 </script>
 
 <style lang="less" scoped>
@@ -76,11 +90,11 @@ const touchEnd = (e: any) => {
     position: relative;
     width: 100vw;
     height: 100vh;
-    transition: background 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     .menu-side {
       position: absolute;
       height: 100vh;
-      background-color: #fff;
+      background-color: #f6f6f6;
       &-transition {
         transition: left 0.2s ease-in-out;
       }

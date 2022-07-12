@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import BasicLayout from '@/layout/BasicLayout/BasicLayout.vue'
+import { createRouterGuards } from './router-guards';
+import { App } from 'vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -35,5 +37,10 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+export function setupRouter(app: App) {
+  app.use(router);
+  // 创建路由守卫
+  createRouterGuards(router);
+}
 
-export default router
+export default router;

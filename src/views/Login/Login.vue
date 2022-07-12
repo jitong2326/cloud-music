@@ -33,18 +33,18 @@ const password = ref('')
 const userStore = useUserStore()
 const router = useRouter()
 const onSubmit = async () => {
-  // const res = await userStore.login({
-  //   email: email.value,
-  //   password: password.value
-  // })
-  // if (res?.data.code === 200) {
-  //   router.push({
-  //     path: '/found'
-  //   })
-  // }
-  router.push({
-    path: '/found'
+  const res = await userStore.login({
+    email: email.value,
+    password: password.value
   })
+  if (res?.data.code === 200) {
+    router.push({
+      path: '/found'
+    })
+  }
+  // router.push({
+  //   path: '/found'
+  // })
 }
 </script>
 

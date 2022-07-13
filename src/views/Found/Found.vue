@@ -31,7 +31,11 @@
             backgroundColor: '#ecfafd'
           }"
         >
-          <svg-icon name="playlists" :color="settingStore.cssVar.themeColor"></svg-icon>
+          <svg-icon
+            class="nav-icon-item"
+            name="focusMusic"
+            :color="settingStore.cssVar.themeColor"
+          ></svg-icon>
         </div>
         <span class="nav-item-title">{{ e.name }}</span>
       </div>
@@ -83,11 +87,6 @@ onMounted(async () => {
   await getNav()
   console.log(await getFound())
 })
-
-// const changeThemeCOlor = () => {
-//   settingStore.setThemeColor('#21cedf')
-//   console.log(settingStore.cssVar.themeColor)
-// }
 </script>
 
 <style lang="less">
@@ -160,16 +159,15 @@ onMounted(async () => {
         justify-content: center;
         align-items: center;
         margin-bottom: 10px;
+        &-item {
+          width: 60px;
+          height: 60px;
+        }
       }
-      img {
-        width: 90px;
-        height: 90px;
-        color: #ff0000;
-      }
-      .icon-playlists {
-        width: 60px;
-        height: 60px;
-      }
+      // .icon-fm {
+      //   width: 60px;
+      //   height: 60px;
+      // }
       .nav-item-title {
         font-size: 12px;
         color: @text-color-gray;

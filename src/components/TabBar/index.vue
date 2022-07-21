@@ -8,6 +8,7 @@
         }"
       >
         <svg-icon
+          class="tab-icon-item"
           :name="tab.icon"
           :color="tab.icon === setting.activeTab ? '#FFFFFF' : '#515151'"
         />
@@ -97,6 +98,10 @@ watch(
       width: 60px;
       height: 60px;
       border-radius: 50%;
+      .tab-icon-item {
+        width: 60px !important;
+        height: 60px !important;
+      }
       .icon {
         &-found,
         &-music,
@@ -104,6 +109,10 @@ watch(
           width: 60px;
           height: 60px;
         }
+      }
+      .icon-found {
+        width: 60px;
+        height: 60px;
       }
     }
   }

@@ -3,16 +3,13 @@
     <style>
       .cls-1 {
         fill: #fff;
+        fill-opacity: 0;
         opacity: 0;
-      }
-
-      .cls-2 {
-        fill: currentColor;
       }
     </style>
   </defs>
   <rect class="cls-1" width="1024" height="1024" />
-  <rect class="cls-2" x="444.31" y="160" width="165.69" height="768" rx="74.7" />
-  <rect class="cls-2" x="184.07" y="472.69" width="165.69" height="455.31" rx="82.84" />
-  <rect class="cls-2" x="704.47" y="554.97" width="165.69" height="373.03" rx="82.84" />
+  <rect x="444.31" y="160" width="165.69" height="768" rx="74.7" />
+  <rect x="184.07" y="472.69" width="165.69" height="455.31" rx="82.84" />
+  <rect x="704.47" y="554.97" width="165.69" height="373.03" rx="82.84" />
 </svg>
